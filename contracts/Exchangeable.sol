@@ -24,20 +24,12 @@ abstract contract Exchangeable is ERCProto {
     }
 
     function mintForExchange(address to, uint256 value) external onlyRegisterExchanges returns (bool) {
-        if (_registered[msg.sender] != true) {
-            revert("The sender is not registered as an exchange");
-        }
-
         _mint(to, value);
 
         return true;
     }
 
     function burnForExchange(address from, uint256 value) external onlyRegisterExchanges returns (bool) {
-        if (_registered[msg.sender] != true) {
-            revert("The sender is not registered as an exchange");
-        }
-
         if (_balances[from] < value) {
             revert("The target's balance is not enough");
         }
