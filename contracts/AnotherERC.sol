@@ -3,9 +3,10 @@
 pragma solidity ^0.8.20;
 
 import "./ERCProto.sol";
+import "./Exchangeable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract AnotherERC is ERCProto, Ownable {
+contract AnotherERC is ERCProto, Exchangeable, Ownable {
     constructor() Ownable(msg.sender) {
         _name = "Another Token";
         _symbol = "ANT";
@@ -30,5 +31,13 @@ contract AnotherERC is ERCProto, Ownable {
         _mint(msg.sender, GUARANTEED);
 
         return true;
+    }
+
+    function registerExchange(address exchange) external onlyOwner returns (bool) {
+        return super._registerExchange(exchange);
+    }
+
+    function removeExchange(address exchange) external onlyOwner returns (bool) {
+        return super._removeExchange(exchange);
     }
 }
